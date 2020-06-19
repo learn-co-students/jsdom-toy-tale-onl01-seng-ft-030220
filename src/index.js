@@ -4,7 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#new-toy-btn");
   const toyFormContainer = document.querySelector(".container");
   const form = document.querySelector(".add-toy-form")
+  const likeBtn = document.querySelector("#toy-collection")
   fetchToys()
+  likeBtn.addEventListener("click", (e) => {
+    const targetedClass = e.target.parentElement
+    if (targetedClass.className === "toy") {
+      const toyID = targetedClass.id
+      const updatedLikes = parseInt(targetedClass.querySelector("p").innerHTML.split(" ")[0]) + 1
+      addLike(toyID,updatedLikes)
+    }
+  })
+  
   addBtn.addEventListener("click", () => {
     // hide & seek with the form
     addToy = !addToy;
@@ -71,6 +81,8 @@ function toyHTML(toy) {
   paragraph.innerHTML = toy.likes + " Likes"
   button.className = "like-btn"
   button.innerHTML = "Like <3"
+  div.className = "toy"
+  div.id = toy.id
   div.appendChild(header)
   div.appendChild(image)
   div.appendChild(paragraph)
@@ -99,10 +111,50 @@ function submitData(name, image) {
       return response.json()
     })
     .then(function(object) {
-      console.log(object)
-    })
-    .catch(function(error) {
-      alert("ERROR!");
+      clearForm()
       fetchToys()
     })
+    .catch(function(error) {
+      alert("ERROR!")
+    })
+}
+
+function clearForm() {
+  const form = document.querySelector(".add-toy-form")
+  form.name.value = ""
+  form.image.value = ""
+  addToy = !addToy
+}
+
+function addLike(toyID,updatedLikes) {
+  let formData = {
+    id: toyID,
+    likes: updatedLikes
+  }
+
+  let configObj = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(formData)
+  };
+  
+  fetch(`http://localhost:3000/toys/${toyID}`, configObj)
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(object) {
+      clearToys()
+      fetchToys()
+    })
+    .catch(function(error) {
+      alert("ERROR!")
+    })
+}
+
+function clearToys() {
+  const toys = document.getElementById("toy-collection")
+  toys.innerHTML = ""
 }

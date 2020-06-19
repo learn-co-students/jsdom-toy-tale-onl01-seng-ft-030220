@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 5
+      "likes": 26
     },
     {
       "id": 2,
@@ -59,6 +59,18 @@
       "image": "http://pngimg.com/uploads/pokemon/pokemon_PNG148.png",
       "likes": 0,
       "id": 10
+    },
+    {
+      "name": "Ash Ketchum",
+      "image": "http://www.pngmart.com/files/12/Ash-Ketchum-Transparent-Background.png",
+      "likes": 0,
+      "id": 11
+    },
+    {
+      "name": "Bear Kuma",
+      "image": "http://www.pngmart.com/files/12/Bear-Kuma-Tekken-PNG-File.png",
+      "likes": 0,
+      "id": 12
     }
   ]
 }
